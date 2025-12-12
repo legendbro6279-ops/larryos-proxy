@@ -1,14 +1,19 @@
 const express = require("express");
 const fetch = require("node-fetch");
+const cors = require("cors");
+
 const app = express();
 app.use(express.json());
+
+// Allow requests from any origin
+app.use(cors());
 
 app.post("/chat", async (req, res) => {
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": "Bearer " + process.env.OPENROUTER_KEY,
+        "Authorization": `Bearer ${process.env.OPENROUTER_KEY}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(req.body)
@@ -20,4 +25,5 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Proxy running on port 3000"));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Proxy running on port ${port}`));
