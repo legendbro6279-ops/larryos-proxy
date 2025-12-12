@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 
-// Allow requests from any origin
+// Enable CORS for all origins
 app.use(cors());
 
 app.post("/chat", async (req, res) => {
